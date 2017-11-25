@@ -1,0 +1,8 @@
+flags: {}
+packages:
+- .
+- ../elm-compiler
+extra-deps:
+- http-types-0.8.6
+resolver: lts-6.35
+
