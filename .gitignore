@@ -3,3 +3,5 @@ log
 *~
 .cabal-sandbox/
 cabal.sandbox.config
+.idea
+.stack-work
