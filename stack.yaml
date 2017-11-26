@@ -3,6 +3,11 @@ packages:
 - .
 - ../elm-compiler
 extra-deps:
+- aeson-pretty-0.7.2
+- binary-0.7.6.1
+- http-client-0.4.31.2
+- http-client-tls-0.2.4.1
 - http-types-0.8.6
-resolver: lts-6.35
-
+- primitive-0.6.1.0
+- vector-0.11.0.0
+resolver: lts-9.14
