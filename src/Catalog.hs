@@ -26,15 +26,20 @@ import qualified Paths_elm_package as This
 import qualified Reporting.Error as Error
 import qualified Utils.Http as Http
 
-
+import Data.Monoid ((<>))
+import Debug.Trace
 
 -- MAKE URL
 
 
 catalog :: String -> [(String,String)] -> Manager.Manager String
 catalog path vars =
-  do  domain <- asks Manager.catalog
-      return $ domain ++ "/" ++ path ++ "?" ++ urlEncodeVars (version : vars)
+  do  traceM ("catalog, path: " <> (show path) <> ", vars: " <> (show vars) <> "\n")
+      domain <- asks Manager.catalog
+      traceM ("catalog.domain: " <> (show domain) <> "\n")
+      let result = domain ++ "/" ++ path ++ "?" ++ urlEncodeVars (version : vars)
+      traceM ("catalog.result: " <> (show result) <> "\n")
+      return result
   where
     version = ("elm-package-version", showVersion This.version)
 

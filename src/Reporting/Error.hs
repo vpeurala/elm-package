@@ -57,6 +57,7 @@ data Error
   | Unbumpable Pkg.Version [Pkg.Version]
   | InvalidBump Pkg.Version Pkg.Version
   | BadBump Pkg.Version Pkg.Version Diff.Magnitude Pkg.Version Diff.Magnitude
+  deriving (Show)
 
 
 
@@ -67,6 +68,7 @@ data Hint
   = EmptyConstraint Pkg.Name C.Constraint
   | IncompatibleConstraint Pkg.Name C.Constraint Pkg.Version
   | IncompatiblePackage Pkg.Name
+  deriving (Show)
 
 
 

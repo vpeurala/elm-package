@@ -43,7 +43,7 @@ data Description = Description
     , exposed :: [Module.Raw]
     , natives :: Bool
     , dependencies :: [(Package.Name, C.Constraint)]
-    }
+    } deriving (Show)
 
 
 defaultDescription :: Description

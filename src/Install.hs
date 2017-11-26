@@ -21,23 +21,32 @@ import qualified Manager
 import qualified Reporting.Error as Error
 import qualified Store
 
+import Data.Monoid ((<>))
 
+import Debug.Trace
 
 data Args
     = Everything
     | Latest Package.Name
     | Exactly Package.Name Package.Version
+    deriving (Show)
 
 
 install :: Bool -> Args -> Manager.Manager ()
 install autoYes args =
   do  exists <- liftIO (doesFileExist Path.description)
 
+      traceM ("exists: " <> (show exists) <> "\n")
+
       description <-
         if exists then
           Desc.read Error.CorruptDescription Path.description
         else
           initialDescription
+
+      traceM ("description: " <> (show description) <> "\n")
+
+      traceM ("args: " <> (show args) <> "\n")
 
       case args of
         Everything ->
@@ -59,7 +68,11 @@ install autoYes args =
 
 upgrade :: Bool -> Desc.Description -> Manager.Manager ()
 upgrade autoYes desc =
-  do  newSolution <- Solver.solve (Desc.elmVersion desc) (Desc.dependencies desc)
+  do  traceM ("upgrade, autoYes: " <> (show autoYes) <> ", desc: " <> (show desc) <> "\n")
+
+      newSolution <- Solver.solve (Desc.elmVersion desc) (Desc.dependencies desc)
+
+      traceM ("newSolution: " <> (show newSolution) <> "\n")
 
       exists <- liftIO (doesFileExist Path.solvedDependencies)
 
@@ -92,7 +105,7 @@ getApproval autoYes plan =
 
 
 runPlan :: Solution.Solution -> Plan.Plan -> Manager.Manager ()
-runPlan solution plan =
+runPlan solution plan = trace ("runPlan, plan: " <> (show plan)) $
   do  let installs =
             Map.toList (Plan.installs plan)
             ++ Map.toList (Map.map snd (Plan.upgrades plan))

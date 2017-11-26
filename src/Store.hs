@@ -17,7 +17,9 @@ import qualified Elm.Package as Package
 import qualified Manager
 import qualified Reporting.Error as Error
 
+import Data.Monoid ((<>))
 
+import Debug.Trace
 
 -- STORE
 
@@ -25,7 +27,7 @@ import qualified Reporting.Error as Error
 data Store = Store
   { constraintCache :: ConstraintCache
   , versionCache :: VersionCache
-  }
+  } deriving (Show)
 
 
 type ConstraintCache =
@@ -39,12 +41,14 @@ type VersionCache =
 initialStore :: Manager.Manager Store
 initialStore =
   do  versionCache <- readVersionCache
+      traceM ("initialStore, versionCache: " <> (show versionCache) <> "\n")
       return (Store Map.empty versionCache)
 
 
 readVersionCache :: Manager.Manager VersionCache
 readVersionCache =
   do  cacheDirectory <- asks Manager.cacheDirectory
+      traceM ("cacheDirectory: " <> (show cacheDirectory) <> "\n")
       let versionsFile = cacheDirectory </> "versions.dat"
       let lastUpdatedPath = cacheDirectory </> "last-updated"
 

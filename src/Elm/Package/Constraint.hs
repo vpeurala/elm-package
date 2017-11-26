@@ -24,9 +24,11 @@ import qualified Elm.Compiler as Compiler
 
 data Constraint
     = Range Package.Version Op Op Package.Version
+    deriving (Show)
 
 
 data Op = Less | LessOrEqual
+        deriving (Show)
 
 
 

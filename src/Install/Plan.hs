@@ -10,7 +10,7 @@ data Plan = Plan
     { installs :: Map.Map Package.Name Package.Version
     , upgrades :: Map.Map Package.Name (Package.Version, Package.Version)
     , removals :: Map.Map Package.Name Package.Version
-    }
+    } deriving (Show)
 
 
 create :: S.Solution -> S.Solution -> Plan
